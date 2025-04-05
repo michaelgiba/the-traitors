@@ -15,9 +15,9 @@ class ParticipantConfig:
 @dataclass(frozen=True)
 class GameConfig:
     game_type: "GameType"
-    participants: List[ParticipantConfig]
+    participant_configs: List[ParticipantConfig]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         from reality_show_bench.games import GameType
 
         if isinstance(self.game_type, str):

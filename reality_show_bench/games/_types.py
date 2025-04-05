@@ -3,7 +3,8 @@ from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
 
-import plomp
+# Ignore plomp import type error
+import plomp  # type: ignore
 
 
 class GameType(Enum):
@@ -30,7 +31,7 @@ class RealityGame(ABC):
         self.finished = False
         self.progress_uri = progress_uri
 
-    def _write_progress(self):
+    def _write_progress(self) -> None:
         if self.progress_uri:
             plomp.write_html(plomp.buffer(), self.progress_uri)
 

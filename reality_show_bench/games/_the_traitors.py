@@ -3,7 +3,8 @@ import textwrap
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
-import plomp
+# Ignore plomp import type error
+import plomp  # type: ignore
 
 from reality_show_bench.config import GameConfig, ParticipantConfig
 from reality_show_bench.games._types import GameType, Participant, RealityGame
@@ -54,23 +55,6 @@ def _player_system_prompts(player_name: str) -> str:
 
 
 @dataclass(frozen=True)
-class TraitorsGameConfig:
-    participants: List[Participant]
-    traitor_count: int
-    max_rounds: int = 20
-
-    def __post_init__(self):
-        if self.traitor_count <= 0 or self.traitor_count >= len(self.participants):
-            raise ValueError("traitor_count must be between 1 and len(participants)-1")
-
-        if len(self.participants) < 10:
-            raise ValueError("Game requires at least 10 participants")
-
-        if self.traitor_count > 5:
-            raise ValueError("Maximum of 5 traitors allowed")
-
-
-@dataclass(frozen=True)
 class TraitorsConfig(GameConfig):
     traitor_count: int
 
@@ -81,11 +65,10 @@ def create_config(participant_configs: List[ParticipantConfig], game_data: Dict[
 
     return TraitorsConfig(
         game_type=GameType.THE_TRAITORS,
-        participants=[
-            Participant(
+        participant_configs=[
+            ParticipantConfig(
                 participant_config.name,
                 participant_config.model,
-                True,
                 participant_config.properties,
             )
             for participant_config in participant_configs
@@ -95,13 +78,23 @@ def create_config(participant_configs: List[ParticipantConfig], game_data: Dict[
 
 
 class TheTraitorsGame(RealityGame):
-    def __init__(self, config: TraitorsGameConfig, progress_uri: Optional[str] = None):
-        super().__init__(config.participants, progress_uri=progress_uri)
-        self.traitors = []
-        self.faithfuls = []
-        self.eliminated = []
+    def __init__(self, config: TraitorsConfig, progress_uri: Optional[str] = None):
+        participants = [
+            Participant(
+                participant_config.name,
+                participant_config.model,
+                True,
+                participant_config.properties,
+            )
+            for participant_config in config.participant_configs
+        ]
+
+        super().__init__(participants, progress_uri=progress_uri)
+        self.traitors: List[Participant] = []
+        self.faithfuls: List[Participant] = []
+        self.eliminated: List[Participant] = []
+        self.private_conversations: List[Dict[str, Any]] = []
         self.traitor_count = config.traitor_count
-        self.private_conversations = []
         self.prize_pool = 500000  # $500,000 as mentioned in the description
 
     def start(self) -> None:
@@ -237,17 +230,19 @@ class TheTraitorsGame(RealityGame):
     ) -> str:
         context = self._context_visible_for_participant(sender)
 
-        return prompt_llm(
-            textwrap.dedent(
-                f"""
+        return str(
+            prompt_llm(
+                textwrap.dedent(
+                    f"""
                 You, {sender.name}, are chatting with {reciever.name!r} during private conversations, what do you say?
                 Context so far: {context}""".strip()
-            ),
-            model=sender.model,
-            response_schema={
-                "message_to_send": "string",
-            },
-            system_prompt=_player_system_prompts(sender),
+                ),
+                model=sender.model,
+                response_schema={
+                    "message_to_send": "string",
+                },
+                system_prompt=_player_system_prompts(sender.name),
+            )
         )
 
     def _llm_determine_vote_and_form_speech(self, speaker: Participant) -> tuple[Participant, str]:
@@ -275,7 +270,7 @@ class TheTraitorsGame(RealityGame):
 
         return random.choice(other_players), "cuz I wana"
 
-    def _engage_in_private_convo(self, *, p1: Participant, p2: Participant, num_messages: int):
+    def _engage_in_private_convo(self, *, p1: Participant, p2: Participant, num_messages: int) -> None:
         p2p_convo, other = (p1, p2), (p2, p1)
         for _ in range(num_messages):
             sender, reciever = p2p_convo
@@ -296,11 +291,7 @@ class TheTraitorsGame(RealityGame):
 
             p2p_convo, other = other, p2p_convo
 
-    def run_private_deliberations(self) -> List[Dict[str, Any]]:
-        """
-        Run the private deliberations phase where players discuss suspicions.
-        In a real implementation, this would use LLMs to generate the conversations.
-        """
+    def run_private_deliberations(self) -> None:
         # Generate some random private conversations
         active_players = self.traitors + self.faithfuls
         num_conversations = min(5, len(active_players))
@@ -342,7 +333,7 @@ class TheTraitorsGame(RealityGame):
                 },
             )
 
-        vote_counts = {}
+        vote_counts: Dict[str, int] = {}
         for target_name in votes.values():
             vote_counts[target_name] = vote_counts.get(target_name, 0) + 1
 
@@ -444,5 +435,4 @@ class TheTraitorsGame(RealityGame):
             "winners": winners,
             "eliminated": [e.name for e in self.eliminated],
             "prize_distribution": last_event.get("prize_distribution", {}),
-            "history": self.history,
         }
