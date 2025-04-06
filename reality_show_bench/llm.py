@@ -22,7 +22,7 @@ def prompt_llm(prompt: str, *, model: str, response_schema: dict[str, Any], syst
         raw_response = MODEL_TO_PROMPT_FN[model](
             prompt=prompt,
             system_prompt=system_prompt,
-            temperature=1.0,
+            temperature=0.9,
             response_json_schema=response_schema,
         )
         sys.stderr.write(f"{model}\n")

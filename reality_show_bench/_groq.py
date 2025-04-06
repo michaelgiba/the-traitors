@@ -24,7 +24,7 @@ def _add_json_schema_to_prompt(prompt: str, response_json_schema: dict | None) -
     {prompt}"""
 
 
-MAX_RETRIES: int = 3
+MAX_RETRIES: int = 5
 RETRY_DELAY_SEC: float = 5.0
 
 
