@@ -1,3 +1,4 @@
+import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
@@ -32,7 +33,11 @@ class RealityGame(ABC):
         self.progress_uri = progress_uri
 
     def _write_progress(self) -> None:
+        import os
+
         if self.progress_uri:
+            sys.stderr.write(f"Writing to: {os.path.abspath(self.progress_uri)} \n")
+            sys.stderr.flush()
             plomp.write_html(plomp.buffer(), self.progress_uri)
 
     @abstractmethod

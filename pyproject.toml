@@ -13,6 +13,8 @@ dependencies = [
     "typeguard>=3.0.0",
     "plomp==0.1.2",
     "typing-extensions>=4.0.0",
+    "groq>=0.4.0",
+    "instructor>=1.7.9",
 ]
 
 [project.scripts]
@@ -26,6 +28,9 @@ dev = [
     "pytest>=7.3.1",
 ]
 
+[tool.setuptools]
+packages = ["reality_show_bench"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py310"
@@ -37,7 +42,3 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
-
-[tool.black]
-line-length = 88
-target-version = ["py310"]

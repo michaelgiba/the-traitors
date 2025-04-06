@@ -1,18 +1,37 @@
-from typing import Any, Dict, Optional, cast
+import sys
+from functools import partial
+from typing import Any
 
-# Ignore plomp import type error with a type: ignore comment
 import plomp  # type: ignore
 
+from reality_show_bench._groq import GROQ_VALID_MODELS, groq_completion
+from reality_show_bench._local import local_phi4_completion
 
-@plomp.wrap_prompt_fn()
-def prompt_llm(prompt: str, *, model: str, response_schema: dict[str, Any], system_prompt: str) -> dict[str, Any]:
-    return f"<LLM RESPONSE model={model}>"
+MODEL_TO_PROMPT_FN = {
+    "local-phi4": local_phi4_completion,
+    **{f"groq-{mn}": partial(groq_completion, model=mn) for mn in GROQ_VALID_MODELS},
+}
 
 
-# Fix the return value type
-def sample_response(model: str, prompt: str, temperature: Optional[float] = None) -> Dict[str, Any]:
-    # Assuming the function should return a dict instead of str
-    response = plomp.sample(model, prompt, temperature=temperature)
-    if isinstance(response, str):
-        return {"response": response}
-    return cast(Dict[str, Any], response)
+@plomp.wrap_prompt_fn(capture_tag_kwargs={"model"})
+def prompt_llm(prompt: str, *, model: str, response_schema: dict[str, Any], system_prompt: str) -> str:
+    sys.stderr.write(f"Prompting LLM with model: {model}\n")
+    sys.stderr.flush()
+
+    try:
+        raw_response = MODEL_TO_PROMPT_FN[model](
+            prompt=prompt,
+            system_prompt=system_prompt,
+            temperature=1.0,
+            response_json_schema=response_schema,
+        )
+        sys.stderr.write(f"{model}\n")
+        sys.stderr.flush()
+
+        # Ensure we're only returning the content string, not the whole response object
+        response_content = raw_response["choices"][0]["message"]["content"]
+        return str(response_content)
+    except Exception as e:
+        sys.stderr.write(f"Error during LLM prompt: {str(e)}\n")
+        sys.stderr.flush()
+        raise
