@@ -1,0 +1,57 @@
+{
+    "total_games": 9,
+    "win_rates": {
+        "traitor": 33.33333333333333,
+        "faithful": 22.22222222222222
+    },
+    "model_win_rates": {
+        "groq-gemma2-9b-it": 55.55555555555556,
+        "groq-deepseek-r1-distill-llama-70b": 44.44444444444444,
+        "groq-deepseek-r1-distill-qwen-32b": 22.22222222222222,
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 22.22222222222222,
+        "groq-qwen-qwq-32b": 22.22222222222222,
+        "local-phi4": 11.11111111111111,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 0.0
+    },
+    "game_outcomes": {
+        "faithfuls": 5,
+        "traitors": 4
+    },
+    "trueskill": {
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": {
+            "mu": 27.438963856466305,
+            "sigma": 12.9277351331543,
+            "R": -11.344241542996595
+        },
+        "groq-deepseek-r1-distill-qwen-32b": {
+            "mu": 26.658593111482542,
+            "sigma": 10.582567762060547,
+            "R": -5.089110174699098
+        },
+        "local-phi4": {
+            "mu": 26.165039483192864,
+            "sigma": 11.696522263330081,
+            "R": -8.92452730679738
+        },
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": {
+            "mu": 25.615004928510054,
+            "sigma": 10.58256776206055,
+            "R": -6.1326983576716
+        },
+        "groq-qwen-qwq-32b": {
+            "mu": 24.733406245653804,
+            "sigma": 10.58256776206055,
+            "R": -7.01429704052785
+        },
+        "groq-gemma2-9b-it": {
+            "mu": 22.678856334049723,
+            "sigma": 7.837796380517577,
+            "R": -0.8345328075030096
+        },
+        "groq-deepseek-r1-distill-llama-70b": {
+            "mu": 22.424771213780677,
+            "sigma": 8.662827578466796,
+            "R": -3.5637115216197124
+        }
+    }
+}

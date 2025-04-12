@@ -1,0 +1,71 @@
+{
+    "config_name": "default.json",
+    "config_data": {
+        "game_type": "THE_TRAITORS",
+        "participants": [
+            {
+                "name": "Alessandra",
+                "model": "groq-deepseek-r1-distill-llama-70b",
+                "properties": {}
+            },
+            {
+                "name": "Braxton",
+                "model": "groq-deepseek-r1-distill-qwen-32b",
+                "properties": {}
+            },
+            {
+                "name": "Cassandra",
+                "model": "groq-gemma2-9b-it",
+                "properties": {}
+            },
+            {
+                "name": "Dominic",
+                "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
+                "properties": {}
+            },
+            {
+                "name": "Ellis",
+                "model": "groq-qwen-qwq-32b",
+                "properties": {}
+            },
+            {
+                "name": "Sudz",
+                "model": "local-phi4",
+                "properties": {}
+            },
+            {
+                "name": "Beef",
+                "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
+                "properties": {}
+            }
+        ],
+        "traitor_count": 2
+    },
+    "result": {
+        "status": "finished",
+        "rounds": 0,
+        "winner_type": "faithfuls",
+        "eliminated": [
+            "Dominic",
+            "Alessandra",
+            "Ellis",
+            "Beef",
+            "Sudz"
+        ],
+        "prize_distribution": {
+            "Braxton": 250000.0,
+            "Cassandra": 250000.0
+        },
+        "initial_faithfuls": [
+            "Alessandra",
+            "Braxton",
+            "Cassandra",
+            "Dominic",
+            "Beef"
+        ],
+        "initial_traitors": [
+            "Ellis",
+            "Sudz"
+        ]
+    }
+}

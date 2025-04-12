@@ -1,7 +1,10 @@
 import argparse
 import json
+import os
 import sys
 from typing import Any, Dict
+
+import plomp
 
 from reality_show_bench.config import ParticipantConfig
 from reality_show_bench.games import (
@@ -20,15 +23,20 @@ def parse_args() -> argparse.Namespace:
         help="Path to the configuration file for the game",
     )
     parser.add_argument(
-        "--output-html",
+        "--output-dir",
         type=str,
         required=True,
-        help="Path to save the HTML progress output",
+        help="Path to save the HTML/JSON progress output",
+    )
+    parser.add_argument(
+        "--existing-buffer",
+        type=str,
+        help="Path to an existing JSON plomp buffer if one exists",
     )
     return parser.parse_args()
 
 
-def load_config(config_path: str, output_path: str) -> Any:
+def load_config(config_path: str, output_dir: str) -> Any:
     sys.stderr.write(f"Loading config from {config_path}...\n")
     sys.stderr.flush()
 
@@ -42,25 +50,68 @@ def load_config(config_path: str, output_path: str) -> Any:
     game_type = GameType[config_data["game_type"]]
     game_config = GAME_TYPE_TO_CREATE_CONFIG[game_type](participant_configs, config_data)
 
-    sys.stderr.write(f"Creating game of type {game_type} with output to {output_path}\n")
+    sys.stderr.write(f"Creating game of type {game_type} with output to {output_dir}\n")
     sys.stderr.flush()
 
-    return GAME_TYPE_TO_CLASS[game_type](game_config, progress_uri=output_path)
+    return GAME_TYPE_TO_CLASS[game_type](game_config, progress_dir=output_dir), config_data
+
+
+def _fill_plomp_buffer(buffer, raw_data) -> plomp.PlompBuffer:
+    for item in raw_data["buffer_items"]:
+        if item["type"] == "event":
+            plomp.record_event(
+                item["data"]["payload"],
+                tags=item["tags"],
+                buffer=buffer,
+            )
+        elif item["type"] == "prompt":
+            handle = plomp.record_prompt(
+                item["data"]["prompt"],
+                tags=item["tags"],
+                buffer=buffer,
+            )
+            if item.get("completion"):
+                handle.complete(
+                    item["completion"]["response"],
+                )
+        elif item["type"] == "query":
+            buffer.record_query(
+                plomp_query=plomp.PlompBufferQuery(
+                    buffer,
+                    matched_indices=item["data"]["matched_indices"],
+                    op_name=item["data"]["op_name"],
+                ),
+                tags=item["tags"],
+            )
+        else:
+            raise ValueError(f"Malformed input, unknown buffer item type: {item['type']!r}")
 
 
 def main() -> None:
     args = parse_args()
-    game = load_config(args.config, args.output_html)
+    if args.existing_buffer:
+        with open(args.existing_buffer) as f:
+            existing_raw_plomp_data = json.load(f)
 
-    game.start()
+        _fill_plomp_buffer(plomp.buffer(), existing_raw_plomp_data)
+
+    game, config_data = load_config(args.config, args.output_dir)
 
     while not game.is_finished():
         game.step()
 
     results: Dict[str, Any] = game.get_results()
 
-    results_json = json.dumps(results, indent=4)
-    print(results_json)
+    print(
+        json.dumps(
+            {
+                "config_name": os.path.basename(args.config),
+                "config_data": config_data,
+                "result": results,
+            },
+            indent=4,
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ GROQ_VALID_MODELS = {
     "gemma2-9b-it",
     "meta-llama/llama-4-scout-17b-16e-instruct",
     "qwen-qwq-32b",
+    "meta-llama/llama-4-maverick-17b-128e-instruct",
 }
 
 
@@ -24,7 +25,7 @@ def _add_json_schema_to_prompt(prompt: str, response_json_schema: dict | None) -
     {prompt}"""
 
 
-MAX_RETRIES: int = 5
+MAX_RETRIES: int = 12
 RETRY_DELAY_SEC: float = 5.0
 
 
@@ -59,8 +60,14 @@ def groq_completion(
             )
             result.raise_for_status()
             response_json = result.json()
+
+            # Sometimes Groq returns valid json that does't conform, if so we fail and retry.
+            if response_json_schema:
+                for field in response_json_schema["required"]:
+                    assert field in response_json["choices"][0]["message"]["content"]
+
             return response_json
-        except (requests.RequestException, ValueError) as e:
+        except (requests.RequestException, ValueError, KeyError) as e:
             import sys
 
             print(f"Error during API call (attempt {attempt + 1}/{MAX_RETRIES}): {str(e)}", file=sys.stderr)

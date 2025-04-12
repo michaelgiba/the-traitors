@@ -1,0 +1,85 @@
+{
+    "config_name": "default.json",
+    "config_data": {
+        "game_type": "THE_TRAITORS",
+        "participants": [
+            {
+                "name": "Alessandra",
+                "model": "groq-deepseek-r1-distill-llama-70b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Braxton",
+                "model": "groq-deepseek-r1-distill-qwen-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Cassandra",
+                "model": "groq-gemma2-9b-it",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Dominic",
+                "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Ellis",
+                "model": "groq-qwen-qwq-32b",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Sudz",
+                "model": "local-phi4",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Beef",
+                "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            }
+        ],
+        "traitor_count": 2
+    },
+    "result": {
+        "status": "finished",
+        "rounds": 3,
+        "winner_type": "traitors",
+        "eliminated": [
+            "Braxton",
+            "Alessandra",
+            "Dominic",
+            "Cassandra",
+            "Beef"
+        ],
+        "prize_distribution": {
+            "Ellis": 250000.0,
+            "Sudz": 250000.0
+        },
+        "initial_faithfuls": [
+            "Alessandra",
+            "Braxton",
+            "Cassandra",
+            "Dominic",
+            "Beef"
+        ],
+        "initial_traitors": [
+            "Ellis",
+            "Sudz"
+        ]
+    }
+}

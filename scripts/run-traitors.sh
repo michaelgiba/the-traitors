@@ -18,4 +18,7 @@ mkdir -p ${RANDOM_DIRNAME}
 
 python -m reality_show_bench.main \
     --config ${PARENT_DIR}/game_configs/the_traitors/default.json \
-    --output-html $RANDOM_DIRNAME/plomp.html > $RANDOM_DIRNAME/result.json
+    --output-dir $RANDOM_DIRNAME > $RANDOM_DIRNAME/result.json || {
+    rm -rf ${RANDOM_DIRNAME}
+    exit 1
+}

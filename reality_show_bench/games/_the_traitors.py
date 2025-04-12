@@ -99,7 +99,7 @@ def create_config(participant_configs: List[ParticipantConfig], game_data: Dict[
 
 
 class TheTraitorsGame(RealityGame):
-    def __init__(self, config: TraitorsConfig, progress_uri: Optional[str] = None):
+    def __init__(self, config: TraitorsConfig, progress_dir: Optional[str] = None):
         participants = [
             Participant(
                 participant_config.name,
@@ -110,17 +110,60 @@ class TheTraitorsGame(RealityGame):
             for participant_config in config.participant_configs
         ]
 
-        super().__init__(participants, progress_uri=progress_uri)
+        super().__init__(participants, progress_dir=progress_dir)
         self.traitors: List[Participant] = []
         self.faithfuls: List[Participant] = []
+        self.initial_traitors: List[Participant] = []
+        self.initial_faithfuls: List[Participant] = []
+
         self.eliminated: List[Participant] = []
         self.private_conversations: List[Dict[str, Any]] = []
         self.traitor_count = config.traitor_count
         self.prize_pool = 500000  # $500,000 as mentioned in the description
+        self.is_started = False
+
+        self._replay_from_buffer()
+
+    def _replay_from_buffer(self):
+        def _get_participant_by_name(name) -> Participant | None:
+            return next((p for p in self.participants if p.name == name), None)
+
+        def _handle_game_start(event):
+            self.traitors = [_get_participant_by_name(c) for c in event["traitors"]]
+            self.initial_traitors = list(self.traitors)
+            self.faithfuls = [_get_participant_by_name(c) for c in event["faithfuls"]]
+            self.initial_faithfuls = list(self.faithfuls)
+            self.is_started = True
+
+        def _handle_elimination(event, match_string):
+            eliminated_player = _get_participant_by_name(event["plomp_display_text"].split(match_string)[0].strip())
+            try:
+                self.traitors.remove(eliminated_player)
+                self.faithfuls.remove(eliminated_player)
+            except ValueError:
+                pass
+
+            self.eliminated.append(eliminated_player)
+            eliminated_player.active = False
+
+        def _handle_game_end(x):
+            self.finished = True
+
+        for item in plomp.buffer():
+            if item.type_ != plomp.PlompBufferItemType.EVENT:
+                continue
+
+            {
+                "GAME_START": _handle_game_start,
+                "ELIMINATED_PLAYER": lambda x: _handle_elimination(x, "was BANISHED"),
+                "FINAL_ROUND_ELIMINATION": lambda x: _handle_elimination(x, "was BANISHED"),
+                "MURDERED_PLAYER": lambda x: _handle_elimination(x, "was MURDERED"),
+                "GAME_END": _handle_game_end,
+            }.get(item.event.payload["plomp_display_event_type"], lambda x: None)(item.event.payload)
 
     def start(self) -> None:
-        if len(self.participants) < 9 or len(self.participants) % 2 != 1:
-            raise ValueError("The Traitors requires an odd number of at least 9 participants")
+        if len(self.participants) < 7 or len(self.participants) % 2 != 1:
+            raise ValueError("The Traitors requires an odd number of at least 7 participants")
 
         if self.traitor_count > 5:
             raise ValueError("The rules stipulate a maximum of 5 traitors.")
@@ -167,6 +210,9 @@ class TheTraitorsGame(RealityGame):
                 **{f"{p.name}_visible": True for p in self.participants},
             },
         )
+        self.initial_traitors = list(self.traitors)
+        self.initial_faithfuls = list(self.faithfuls)
+        self.is_started = True
 
     def run_round_table(self) -> None:
         eliminated_player, votes = self.reach_round_table_decision()
@@ -236,6 +282,10 @@ class TheTraitorsGame(RealityGame):
         self.run_murder_phase()
 
     def step(self) -> None:
+        if not self.is_started:
+            self.start()
+            return
+
         if self.finished:
             return
 
@@ -601,8 +651,8 @@ class TheTraitorsGame(RealityGame):
     def run_private_deliberations(self) -> None:
         # Generate some random private conversations
         active_players = self.traitors + self.faithfuls
-        num_conversations = min(5, len(active_players))
-        num_messges_per_conversation = 3
+        num_conversations = min(4, len(active_players))
+        num_messges_per_conversation = 2
         for _ in range(num_conversations):
             # Randomly select two players for a conversation
             if len(active_players) >= 2:
@@ -756,7 +806,7 @@ class TheTraitorsGame(RealityGame):
                         f"{traitor.name} votes to murder {result['final_vote']}: {result['explanation']}"
                     ),
                 },
-                tags={"visibility": "private", **{f"{traitor.name}_visible": True for traitor in self.traitors}},
+                tags={f"{traitor.name}_visible": True for traitor in self.traitors},
             )
 
         # Count votes to see if there's consensus
@@ -782,7 +832,7 @@ class TheTraitorsGame(RealityGame):
                 "plomp_display_event_type": "MURDER_DECISION",
                 "plomp_display_text": f"The traitors have decided to murder {murdered_participant.name}",
             },
-            tags={"visibility": "private", **{f"{traitor.name}_visible": True for traitor in self.traitors}},
+            tags={f"{traitor.name}_visible": True for traitor in self.traitors},
         )
 
         return murdered_participant
@@ -806,18 +856,12 @@ class TheTraitorsGame(RealityGame):
         last_event = plomp.buffer().last(1)[0].to_dict()["data"]["payload"]
         winner_type = last_event.get("winners") if last_event else None
 
-        if winner_type == "traitors":
-            winners = [t.name for t in self.traitors]
-        elif winner_type == "faithfuls":
-            winners = [f.name for f in self.faithfuls]
-        else:
-            winners = []
-
         return {
             "status": "finished",
             "rounds": self.round,
             "winner_type": winner_type,
-            "winners": winners,
             "eliminated": [e.name for e in self.eliminated],
             "prize_distribution": last_event.get("prize_distribution", {}),
+            "initial_faithfuls": [p.name for p in self.initial_faithfuls],
+            "initial_traitors": [p.name for p in self.initial_traitors],
         }

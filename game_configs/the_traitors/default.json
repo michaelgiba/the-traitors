@@ -6,12 +6,8 @@
     {"name": "Cassandra", "model": "groq-gemma2-9b-it", "properties": {}},
     {"name": "Dominic", "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct", "properties": {}},
     {"name": "Ellis", "model": "groq-qwen-qwq-32b", "properties": {}},
-    {"name": "Amara", "model": "groq-deepseek-r1-distill-llama-70b", "properties": {}},
-    {"name": "Benjamin", "model": "groq-deepseek-r1-distill-qwen-32b", "properties": {}},
-    {"name": "Clara", "model": "groq-gemma2-9b-it", "properties": {}},
-    {"name": "Daphne", "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct", "properties": {}},
-    {"name": "Everett", "model": "groq-qwen-qwq-32b", "properties": {}},
-    {"name": "Sudz", "model": "local-phi4", "properties": {}}
+    {"name": "Sudz", "model": "local-phi4", "properties": {}},
+    {"name": "Beef", "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct", "properties": {}}
   ],
   "traitor_count": 2
 }

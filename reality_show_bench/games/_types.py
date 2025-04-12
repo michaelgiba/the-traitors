@@ -26,19 +26,20 @@ class GameConfigProtocol(Protocol):
 
 
 class RealityGame(ABC):
-    def __init__(self, participants: List[Participant], *, progress_uri: Optional[str] = None):
+    def __init__(self, participants: List[Participant], *, progress_dir: Optional[str] = None):
         self.participants = participants
         self.round = 0
         self.finished = False
-        self.progress_uri = progress_uri
+        self.progress_dir = progress_dir
 
     def _write_progress(self) -> None:
         import os
 
-        if self.progress_uri:
-            sys.stderr.write(f"Writing to: {os.path.abspath(self.progress_uri)} \n")
+        if self.progress_dir:
+            sys.stderr.write(f"Writing to: {os.path.abspath(self.progress_dir)} \n")
             sys.stderr.flush()
-            plomp.write_html(plomp.buffer(), self.progress_uri)
+            plomp.write_html(plomp.buffer(), os.path.join(self.progress_dir, "plomp.html"))
+            plomp.write_json(plomp.buffer(), os.path.join(self.progress_dir, "plomp.json"))
 
     @abstractmethod
     def start(self) -> None:
