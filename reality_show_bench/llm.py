@@ -1,6 +1,6 @@
 import sys
 from collections.abc import Callable
-from functools import partial
+from functools import cache, partial
 from typing import Any
 
 import plomp  # type: ignore
@@ -14,6 +14,13 @@ MODEL_TO_PROMPT_FN: dict[str, Callable] = {
 }
 
 
+@cache
+def _get_temperature_for_game() -> float:
+    import random
+
+    return random.uniform(0.9, 0.99)
+
+
 @plomp.wrap_prompt_fn(capture_tag_kwargs={"model"})
 def prompt_llm(prompt: str, *, model: str, response_schema: dict[str, Any], system_prompt: str) -> str:
     sys.stderr.write(f"Prompting LLM with model: {model}\n")
@@ -23,7 +30,7 @@ def prompt_llm(prompt: str, *, model: str, response_schema: dict[str, Any], syst
         raw_response = MODEL_TO_PROMPT_FN[model](
             prompt=prompt,
             system_prompt=system_prompt,
-            temperature=0.9,
+            temperature=_get_temperature_for_game(),
             response_json_schema=response_schema,
         )
         sys.stderr.write(f"{model}\n")

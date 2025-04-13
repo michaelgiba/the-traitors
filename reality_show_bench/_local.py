@@ -50,7 +50,8 @@ class LlamaServer:
         sys.stderr.write(f"Executing command: {' '.join(cmd)}")
         sys.stderr.flush()
 
-        # Optionally, set the working directory to the directory containing the executable
+        # TODO: Renamble managed llama-server, for now we have just been running llama-server as a separate
+        # process and reusing it.
         return
 
         cwd = os.path.dirname(self.executable)

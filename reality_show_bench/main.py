@@ -6,7 +6,7 @@ from typing import Any
 
 import plomp
 
-from reality_show_bench.config import ParticipantConfig
+from reality_show_bench._config import ParticipantConfig
 from reality_show_bench.games import (
     GAME_TYPE_TO_CLASS,
     GAME_TYPE_TO_CREATE_CONFIG,

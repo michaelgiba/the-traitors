@@ -8,7 +8,7 @@ from typing import Any
 # Ignore plomp import type error
 import plomp  # type: ignore
 
-from reality_show_bench.config import GameConfig, ParticipantConfig
+from reality_show_bench._config import GameConfig, ParticipantConfig
 from reality_show_bench.games._types import GameType, Participant, RealityGame
 from reality_show_bench.llm import prompt_llm
 
