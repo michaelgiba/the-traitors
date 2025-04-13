@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from reality_show_bench.games import GameType
@@ -9,13 +9,13 @@ if TYPE_CHECKING:
 class ParticipantConfig:
     name: str
     model: str
-    properties: Dict[str, Any] = field(default_factory=dict)
+    properties: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
 class GameConfig:
     game_type: "GameType"
-    participant_configs: List[ParticipantConfig]
+    participant_configs: list[ParticipantConfig]
 
     def __post_init__(self) -> None:
         from reality_show_bench.games import GameType

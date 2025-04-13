@@ -9,9 +9,11 @@ GROQ_VALID_MODELS = {
     "deepseek-r1-distill-llama-70b",
     "deepseek-r1-distill-qwen-32b",
     "gemma2-9b-it",
+    "llama-3.1-8b-instant",
+    "meta-llama/llama-4-maverick-17b-128e-instruct",
     "meta-llama/llama-4-scout-17b-16e-instruct",
     "qwen-qwq-32b",
-    "meta-llama/llama-4-maverick-17b-128e-instruct",
+    "qwen-2.5-32b",
 }
 
 

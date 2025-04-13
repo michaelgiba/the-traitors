@@ -1,0 +1,103 @@
+{
+    "config_name": "nine_person.json",
+    "config_data": {
+        "game_type": "THE_TRAITORS",
+        "participants": [
+            {
+                "name": "Alessandra",
+                "model": "groq-deepseek-r1-distill-llama-70b",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Braxton",
+                "model": "groq-deepseek-r1-distill-qwen-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Cassandra",
+                "model": "groq-gemma2-9b-it",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Dominic",
+                "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Ellis",
+                "model": "groq-qwen-qwq-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Sudz",
+                "model": "local-phi4",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Beef",
+                "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Fletcher",
+                "model": "groq-qwen-2.5-32b",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Gwendolyn",
+                "model": "groq-llama-3.1-8b-instant",
+                "properties": {
+                    "role": "faithful"
+                }
+            }
+        ],
+        "traitor_count": 3
+    },
+    "result": {
+        "status": "finished",
+        "rounds": 3,
+        "winner_type": "traitors",
+        "eliminated": [
+            "Ellis",
+            "Braxton",
+            "Gwendolyn",
+            "Cassandra",
+            "Sudz",
+            "Beef"
+        ],
+        "prize_distribution": {
+            "Alessandra": 166666.66666666666,
+            "Dominic": 166666.66666666666,
+            "Fletcher": 166666.66666666666
+        },
+        "initial_faithfuls": [
+            "Braxton",
+            "Cassandra",
+            "Ellis",
+            "Sudz",
+            "Beef",
+            "Gwendolyn"
+        ],
+        "initial_traitors": [
+            "Alessandra",
+            "Dominic",
+            "Fletcher"
+        ]
+    }
+}

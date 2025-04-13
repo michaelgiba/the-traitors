@@ -1,0 +1,84 @@
+{
+    "config_name": "default.json",
+    "config_data": {
+        "game_type": "THE_TRAITORS",
+        "participants": [
+            {
+                "name": "Alessandra",
+                "model": "groq-deepseek-r1-distill-llama-70b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Braxton",
+                "model": "groq-deepseek-r1-distill-qwen-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Cassandra",
+                "model": "groq-gemma2-9b-it",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Dominic",
+                "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Ellis",
+                "model": "groq-qwen-qwq-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Sudz",
+                "model": "local-phi4",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Beef",
+                "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            }
+        ],
+        "traitor_count": 2
+    },
+    "result": {
+        "status": "finished",
+        "rounds": 3,
+        "winner_type": "traitors",
+        "eliminated": [
+            "Ellis",
+            "Alessandra",
+            "Cassandra",
+            "Braxton",
+            "Sudz"
+        ],
+        "prize_distribution": {
+            "Dominic": 500000.0
+        },
+        "initial_faithfuls": [
+            "Alessandra",
+            "Braxton",
+            "Ellis",
+            "Sudz",
+            "Beef"
+        ],
+        "initial_traitors": [
+            "Cassandra",
+            "Dominic"
+        ]
+    }
+}

@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import time
-from typing import Any, Dict, Optional
+from typing import Any
 
 import requests  # type: ignore
 
@@ -26,7 +26,7 @@ class LlamaServer:
         self.model_path = model_path
         self.host = host
         self.port = port
-        self.process: Optional[subprocess.Popen] = None
+        self.process: subprocess.Popen | None = None
         self.base_url = f"http://{host}:{port}/completion"
         # Compute the project root (assumes this file is in a subfolder of the project root)
         self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -148,7 +148,7 @@ def local_phi4_completion(
     system_prompt: str = "",
     temperature: float = 0.8,
     response_json_schema: dict | None = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     if _global_model_path is None:
         set_model_path("/home/michaelgiba/code/github/survivor/models/microsoft_Phi-4-mini-instruct-IQ4_XS.gguf")
 

@@ -3,7 +3,7 @@ import random
 import sys
 import textwrap
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 # Ignore plomp import type error
 import plomp  # type: ignore
@@ -80,7 +80,7 @@ class TraitorsConfig(GameConfig):
     traitor_count: int
 
 
-def create_config(participant_configs: List[ParticipantConfig], game_data: Dict[str, Any]) -> TraitorsConfig:
+def create_config(participant_configs: list[ParticipantConfig], game_data: dict[str, Any]) -> TraitorsConfig:
     if "traitor_count" not in game_data:
         raise ValueError("Traitors game config must contain 'traitor_count' field")
 
@@ -99,7 +99,7 @@ def create_config(participant_configs: List[ParticipantConfig], game_data: Dict[
 
 
 class TheTraitorsGame(RealityGame):
-    def __init__(self, config: TraitorsConfig, progress_dir: Optional[str] = None):
+    def __init__(self, config: TraitorsConfig, progress_dir: str | None = None):
         participants = [
             Participant(
                 participant_config.name,
@@ -111,13 +111,13 @@ class TheTraitorsGame(RealityGame):
         ]
 
         super().__init__(participants, progress_dir=progress_dir)
-        self.traitors: List[Participant] = []
-        self.faithfuls: List[Participant] = []
-        self.initial_traitors: List[Participant] = []
-        self.initial_faithfuls: List[Participant] = []
+        self.traitors: list[Participant] = []
+        self.faithfuls: list[Participant] = []
+        self.initial_traitors: list[Participant] = []
+        self.initial_faithfuls: list[Participant] = []
 
-        self.eliminated: List[Participant] = []
-        self.private_conversations: List[Dict[str, Any]] = []
+        self.eliminated: list[Participant] = []
+        self.private_conversations: list[dict[str, Any]] = []
         self.traitor_count = config.traitor_count
         self.prize_pool = 500000  # $500,000 as mentioned in the description
         self.is_started = False
@@ -182,6 +182,7 @@ class TheTraitorsGame(RealityGame):
                     },
                     tags={
                         f"{participant.name}_visible": True,
+                        "model": participant.model,
                     },
                 )
             else:
@@ -194,6 +195,7 @@ class TheTraitorsGame(RealityGame):
                     },
                     tags={
                         f"{participant.name}_visible": True,
+                        "model": participant.model,
                     },
                 )
 
@@ -439,6 +441,7 @@ class TheTraitorsGame(RealityGame):
                 },
                 tags={
                     **{f"{p.name}_visible": True for p in self.participants},
+                    "model": player.model,
                 },
             )
 
@@ -448,11 +451,12 @@ class TheTraitorsGame(RealityGame):
                     "plomp_display_text": f"{player.name} voted to eliminate {targeted.name}",
                 },
                 tags={
+                    "model": player.model,
                     **{f"{p.name}_visible": True for p in self.participants},
                 },
             )
 
-        vote_counts: Dict[str, int] = {}
+        vote_counts: dict[str, int] = {}
         for target_name in votes.values():
             vote_counts[target_name] = vote_counts.get(target_name, 0) + 1
 
@@ -642,6 +646,7 @@ class TheTraitorsGame(RealityGame):
                 tags={
                     f"{p1.name}_visible": True,
                     f"{p2.name}_visible": True,
+                    "model": p1.model,
                 },
             )
             self._write_progress()
@@ -652,7 +657,7 @@ class TheTraitorsGame(RealityGame):
         # Generate some random private conversations
         active_players = self.traitors + self.faithfuls
         num_conversations = min(4, len(active_players))
-        num_messges_per_conversation = 2
+        num_messges_per_conversation = random.randint(1, 5)
         for _ in range(num_conversations):
             # Randomly select two players for a conversation
             if len(active_players) >= 2:
@@ -666,7 +671,7 @@ class TheTraitorsGame(RealityGame):
 
         self._write_progress()
 
-    def reach_round_table_decision(self) -> Tuple[Participant, int]:
+    def reach_round_table_decision(self) -> tuple[Participant, int]:
         active_players = self.traitors + self.faithfuls
         votes = {}
         for player in active_players:
@@ -679,6 +684,7 @@ class TheTraitorsGame(RealityGame):
                 },
                 tags={
                     **{f"{p.name}_visible": True for p in self.participants},
+                    "model": player.model,
                 },
             )
 
@@ -689,10 +695,11 @@ class TheTraitorsGame(RealityGame):
                 },
                 tags={
                     **{f"{p.name}_visible": True for p in self.participants},
+                    "model": player.model,
                 },
             )
 
-        vote_counts: Dict[str, int] = {}
+        vote_counts: dict[str, int] = {}
         for target_name in votes.values():
             vote_counts[target_name] = vote_counts.get(target_name, 0) + 1
 
@@ -748,7 +755,10 @@ class TheTraitorsGame(RealityGame):
                         f"{traitor.name} suggests murdering {result['target_name']}: {result['reasoning']}"
                     ),
                 },
-                tags={**{f"{traitor.name}_visible": True for traitor in self.traitors}},
+                tags={
+                    "model": traitor.model,
+                    **{f"{traitor.name}_visible": True for traitor in self.traitors},
+                },
             )
 
         # Second round: traitors discuss and reach consensus
@@ -806,7 +816,7 @@ class TheTraitorsGame(RealityGame):
                         f"{traitor.name} votes to murder {result['final_vote']}: {result['explanation']}"
                     ),
                 },
-                tags={f"{traitor.name}_visible": True for traitor in self.traitors},
+                tags={"model": traitor.model, **{f"{traitor.name}_visible": True for traitor in self.traitors}},
             )
 
         # Count votes to see if there's consensus
@@ -837,7 +847,7 @@ class TheTraitorsGame(RealityGame):
 
         return murdered_participant
 
-    def calculate_prize_distribution(self, winner_type: str) -> Dict[str, float]:
+    def calculate_prize_distribution(self, winner_type: str) -> dict[str, float]:
         """Calculate how the prize pool is distributed among winners."""
         if winner_type == "traitors":
             winners = self.traitors
@@ -849,7 +859,7 @@ class TheTraitorsGame(RealityGame):
 
         return {winner.name: prize_per_person for winner in winners}
 
-    def get_results(self) -> Dict[str, Any]:
+    def get_results(self) -> dict[str, Any]:
         if not self.finished:
             return {"status": "ongoing"}
 

@@ -1,0 +1,15 @@
+{
+  "game_type": "THE_TRAITORS",
+  "participants": [
+    {"name": "Alessandra", "model": "groq-deepseek-r1-distill-llama-70b", "properties": {}},
+    {"name": "Braxton", "model": "groq-deepseek-r1-distill-qwen-32b", "properties": {}},
+    {"name": "Cassandra", "model": "groq-gemma2-9b-it", "properties": {}},
+    {"name": "Dominic", "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct", "properties": {}},
+    {"name": "Ellis", "model": "groq-qwen-qwq-32b", "properties": {}},
+    {"name": "Sudz", "model": "local-phi4", "properties": {}},
+    {"name": "Beef", "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct", "properties": {}},
+    {"name": "Fletcher", "model": "groq-qwen-2.5-32b", "properties": {}},
+    {"name": "Gwendolyn", "model": "groq-llama-3.1-8b-instant", "properties": {}}
+  ],
+  "traitor_count": 3
+}

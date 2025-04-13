@@ -2,7 +2,7 @@ import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 # Ignore plomp import type error
 import plomp  # type: ignore
@@ -17,16 +17,16 @@ class Participant:
     name: str
     model: str
     active: bool
-    properties: Dict[str, Any] = field(default_factory=dict)
+    properties: dict[str, Any] = field(default_factory=dict)
 
 
 @runtime_checkable
 class GameConfigProtocol(Protocol):
-    participants: List[Participant]
+    participants: list[Participant]
 
 
 class RealityGame(ABC):
-    def __init__(self, participants: List[Participant], *, progress_dir: Optional[str] = None):
+    def __init__(self, participants: list[Participant], *, progress_dir: str | None = None):
         self.participants = participants
         self.round = 0
         self.finished = False
@@ -53,5 +53,5 @@ class RealityGame(ABC):
         return self.finished
 
     @abstractmethod
-    def get_results(self) -> Dict[str, Any]:
+    def get_results(self) -> dict[str, Any]:
         pass

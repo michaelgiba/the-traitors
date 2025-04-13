@@ -1,0 +1,69 @@
+{
+    "total_games": 17,
+    "win_rates": {
+        "traitor": 54.285714285714285,
+        "faithful": 13.953488372093023
+    },
+    "model_win_rates": {
+        "groq-qwen-2.5-32b": 100.0,
+        "groq-deepseek-r1-distill-llama-70b": 58.82352941176471,
+        "groq-gemma2-9b-it": 41.17647058823529,
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 23.52941176470588,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 17.647058823529413,
+        "groq-qwen-qwq-32b": 11.76470588235294,
+        "groq-deepseek-r1-distill-qwen-32b": 11.76470588235294,
+        "local-phi4": 11.76470588235294,
+        "groq-llama-3.1-8b-instant": 0.0
+    },
+    "game_outcomes": {
+        "traitors": 11,
+        "faithfuls": 6
+    },
+    "trueskill": {
+        "groq-deepseek-r1-distill-qwen-32b": {
+            "mu": 33.163973916787505,
+            "sigma": 15.635272349322996,
+            "R": -13.741843131181483
+        },
+        "local-phi4": {
+            "mu": 29.400866424876988,
+            "sigma": 15.635272349322996,
+            "R": -17.504950623092
+        },
+        "groq-qwen-qwq-32b": {
+            "mu": 28.897536452925177,
+            "sigma": 15.635272349323001,
+            "R": -18.008280595043825
+        },
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": {
+            "mu": 27.08213239323431,
+            "sigma": 14.146198792244615,
+            "R": -15.35646398349953
+        },
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": {
+            "mu": 26.81079856609369,
+            "sigma": 12.798941764411794,
+            "R": -11.58602672714169
+        },
+        "groq-llama-3.1-8b-instant": {
+            "mu": 24.97433472222222,
+            "sigma": 8.750000000000002,
+            "R": -1.2756652777777866
+        },
+        "groq-qwen-2.5-32b": {
+            "mu": 24.754613020833332,
+            "sigma": 7.916666666666667,
+            "R": 1.0046130208333324
+        },
+        "groq-gemma2-9b-it": {
+            "mu": 23.65775790630905,
+            "sigma": 9.479315577378305,
+            "R": -4.780188825825864
+        },
+        "groq-deepseek-r1-distill-llama-70b": {
+            "mu": 14.595286626994831,
+            "sigma": 7.020691668851936,
+            "R": -6.4667883795609775
+        }
+    }
+}

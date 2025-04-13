@@ -1,4 +1,5 @@
 import sys
+from collections.abc import Callable
 from functools import partial
 from typing import Any
 
@@ -7,7 +8,7 @@ import plomp  # type: ignore
 from reality_show_bench._groq import GROQ_VALID_MODELS, groq_completion
 from reality_show_bench._local import local_phi4_completion
 
-MODEL_TO_PROMPT_FN = {
+MODEL_TO_PROMPT_FN: dict[str, Callable] = {
     "local-phi4": local_phi4_completion,
     **{f"groq-{mn}": partial(groq_completion, model=mn) for mn in GROQ_VALID_MODELS},
 }

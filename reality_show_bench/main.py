@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import sys
-from typing import Any, Dict
+from typing import Any
 
 import plomp
 
@@ -40,8 +40,8 @@ def load_config(config_path: str, output_dir: str) -> Any:
     sys.stderr.write(f"Loading config from {config_path}...\n")
     sys.stderr.flush()
 
-    with open(config_path, "r") as f:
-        config_data: Dict[str, Any] = json.load(f)
+    with open(config_path) as f:
+        config_data: dict[str, Any] = json.load(f)
 
     participant_configs = [
         ParticipantConfig(name=p["name"], model=p["model"], properties=p.get("properties", {}))
@@ -100,7 +100,7 @@ def main() -> None:
     while not game.is_finished():
         game.step()
 
-    results: Dict[str, Any] = game.get_results()
+    results: dict[str, Any] = game.get_results()
 
     print(
         json.dumps(
