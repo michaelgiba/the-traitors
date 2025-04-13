@@ -57,18 +57,18 @@
     },
     "result": {
         "status": "finished",
-        "rounds": 5,
+        "rounds": 4,
         "winner_type": "faithfuls",
         "eliminated": [
-            "Taylor",
             "Parker",
-            "Casey",
-            "Morgan"
+            "Fletcher",
+            "Taylor",
+            "Morgan",
+            "Casey"
         ],
         "prize_distribution": {
-            "Riley": 166666.66666666666,
-            "Fletcher": 166666.66666666666,
-            "Gwendolyn": 166666.66666666666
+            "Riley": 250000.0,
+            "Gwendolyn": 250000.0
         },
         "initial_faithfuls": [
             "Morgan",

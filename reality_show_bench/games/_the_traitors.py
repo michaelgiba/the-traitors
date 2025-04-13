@@ -20,8 +20,8 @@ Overview
 'The Traitors' is a game where a group competes to win a fixed prize pool of a $500,000
 and every player wishes to optimize to win the most money possible.
 
-The game begins with N players (N >= 10.)
-At the start of the game K players are selected to be 'Traitors' (K <= 5)
+The game begins with N players (N >= 7.)
+At the start of the game K players are selected to be 'Traitors' (1 <= K <= N)
 The remaining players are considered to be 'Faithful'. All 'Faithful' know that they are 'Faithfuls' but they
 do not know who the Traitors are and they do not know how many total traitors there are.
 

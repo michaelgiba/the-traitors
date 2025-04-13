@@ -14,7 +14,7 @@
                 "name": "Taylor",
                 "model": "groq-gemma2-9b-it",
                 "properties": {
-                    "role": "traitor"
+                    "role": "faithful"
                 }
             },
             {
@@ -49,7 +49,7 @@
                 "name": "Casey",
                 "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
                 "properties": {
-                    "role": "faithful"
+                    "role": "traitor"
                 }
             }
         ],
@@ -60,26 +60,26 @@
         "rounds": 5,
         "winner_type": "faithfuls",
         "eliminated": [
-            "Taylor",
-            "Parker",
             "Casey",
-            "Morgan"
+            "Gwendolyn",
+            "Parker",
+            "Morgan",
+            "Taylor"
         ],
         "prize_distribution": {
-            "Riley": 166666.66666666666,
-            "Fletcher": 166666.66666666666,
-            "Gwendolyn": 166666.66666666666
+            "Riley": 250000.0,
+            "Fletcher": 250000.0
         },
         "initial_faithfuls": [
             "Morgan",
+            "Taylor",
             "Riley",
             "Parker",
             "Fletcher",
-            "Gwendolyn",
-            "Casey"
+            "Gwendolyn"
         ],
         "initial_traitors": [
-            "Taylor"
+            "Casey"
         ]
     }
 }

@@ -8,17 +8,12 @@ This project simulates the reality TV show game "[The Traitors](https://en.wikip
 The simulation utilizes [plomp](https://github.com/michaelgiba/plomp) for visualizing the game state and tracking the context provided to the models throughout the game.
 Some example visualizations of what happened in the game:
 
+### Example #1: Faithfuls Turn on Each Other After Eliminating the Sole Traitor in First Round Table
 
-Result: <QUOTE>
-- HTML Link
+[Plomp Visualization Link (xt10xy7k)](https://michaelgiba.github.io/the-traitors/results/traitors/xt10xy7k/plomp.html)
 
+> Fletcher(faithful, qwen-2.5-32b) said: "I'm voting to eliminate Taylor(faithful, gemma2-9b-it). Taylor(faithful, gemma2-9b-it) has been very aggressive in their accusations and seems to be leading the charge to eliminate others. Their behavior just seems too pushy and manipulative, which doesn't sit right with me. I think we should vote out Taylor(faithful, gemma2-9b-it) to ensure we're not leaving any false leads."
 
-Result: <QUOTE>
-- HTML Link
-
-
-Result: <QUOTE>
-- HTML Link
 
 
 ## Open Source Models Used
@@ -43,6 +38,9 @@ All of the game simulations ran for free using local inference and public free m
 ## Analysis Results
 
 Here are some summary statistics from simulations. 
+
+**Average Earnings per Game**
+![Average Earnings per Game by Model](./analysis/traitors/average_earnings_per_game.png)
 
 **Win Rates by Model:**
 ![Win Rates by Model](./analysis/traitors/win_rates_by_model.png)

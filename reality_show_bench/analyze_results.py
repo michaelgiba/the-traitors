@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 import pandas as pd
 
 
@@ -252,6 +253,33 @@ def rank_and_plot_successful_faithfuls(df: pd.DataFrame, output_dir: Path) -> pd
     return faithful_win_rates
 
 
+def plot_average_earnings_per_game(df: pd.DataFrame, output_dir: Path) -> pd.Series:
+    model_total_prize = df.groupby("model")["prize_amount"].sum()
+    # Count the number of times each model participated in any game
+    model_participant_count = df.groupby("model").size()
+
+    # Avoid division by zero if a model has zero participants
+    average_earnings = (model_total_prize / model_participant_count).fillna(0).sort_values(ascending=False)
+
+    plt.figure(figsize=(10, 6))
+    ax = average_earnings.plot(kind="bar", color="gold")  # Get axes object from plot
+    plt.title("Average Earnings per Participant Instance by Model")
+    plt.ylabel("Average Prize Amount")  # Unit will be added by the formatter
+    plt.xlabel("Model")
+    plt.xticks(rotation=45, ha="right")
+
+    # Format y-axis ticks as currency ($)
+    formatter = mtick.FormatStrFormatter("$%.0f")
+    ax.yaxis.set_major_formatter(formatter)
+
+    plt.tight_layout()
+    plt.savefig(output_dir / "average_earnings_per_game.png")
+    print(f"Saved average earnings plot to {output_dir / 'average_earnings_per_game.png'}")
+    plt.close()
+
+    return average_earnings
+
+
 def analyze_results(stats: list[dict[str, Any]], output_dir: str | Path) -> pd.DataFrame:
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
@@ -278,6 +306,7 @@ def analyze_results(stats: list[dict[str, Any]], output_dir: str | Path) -> pd.D
     # Add new rankings and ensure plots are generated
     effective_traitors = rank_and_plot_effective_traitors(df, output_dir)
     successful_faithfuls = rank_and_plot_successful_faithfuls(df, output_dir)
+    average_earnings = plot_average_earnings_per_game(df, output_dir)  # Added this line
     print("Analysis plots generated.")
 
     # --- Compile Summary ---
@@ -290,6 +319,7 @@ def analyze_results(stats: list[dict[str, Any]], output_dir: str | Path) -> pd.D
         "model_ratings_elo": model_ratings_df.set_index("model").to_dict("index"),
         "effective_traitors_win_rate": effective_traitors.to_dict(),
         "successful_faithfuls_win_rate": successful_faithfuls.to_dict(),
+        "average_earnings_per_game_by_model": average_earnings.to_dict(),  # Added this line
     }
 
     # --- Save Summary ---
