@@ -1,102 +1,103 @@
 {
-    "total_games_analyzed": 21,
-    "total_participants_analyzed": 149,
+    "total_games_analyzed": 49,
+    "total_participants_analyzed": 373,
     "overall_win_rates_by_role": {
-        "traitor": 51.28205128205128,
-        "faithful": 17.272727272727273
+        "traitor": 48.421052631578945,
+        "faithful": 18.345323741007196
     },
     "overall_win_rates_by_model": {
-        "groq-qwen-2.5-32b": 60.0,
-        "groq-deepseek-r1-distill-llama-70b": 47.61904761904761,
-        "groq-llama-3.1-8b-instant": 40.0,
-        "groq-gemma2-9b-it": 38.095238095238095,
-        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 28.57142857142857,
-        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 19.047619047619047,
-        "groq-deepseek-r1-distill-qwen-32b": 11.76470588235294,
-        "groq-qwen-qwq-32b": 11.76470588235294,
-        "local-phi4": 9.523809523809524
+        "groq-qwen-2.5-32b": 39.39393939393939,
+        "groq-deepseek-r1-distill-llama-70b": 34.69387755102041,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 30.612244897959183,
+        "groq-gemma2-9b-it": 26.53061224489796,
+        "groq-qwen-qwq-32b": 25.806451612903224,
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 24.489795918367346,
+        "groq-deepseek-r1-distill-qwen-32b": 22.58064516129032,
+        "groq-llama-3.1-8b-instant": 15.151515151515152,
+        "local-phi4": 14.285714285714285
     },
     "game_outcomes": {
-        "traitors": 12,
-        "faithfuls": 9
+        "traitors": 25,
+        "faithfuls": 24
     },
     "model_ratings_elo": {
         "groq-qwen-2.5-32b": {
-            "mu": 1504.1075256426466,
+            "mu": 1282.2994982351977,
             "sigma": 350,
-            "R": 454.1075256426466
-        },
-        "groq-llama-3.1-8b-instant": {
-            "mu": 1476.5436485087982,
-            "sigma": 350,
-            "R": 426.54364850879824
-        },
-        "groq-gemma2-9b-it": {
-            "mu": 1419.6166601993841,
-            "sigma": 350,
-            "R": 369.6166601993841
+            "R": 232.2994982351977
         },
         "groq-deepseek-r1-distill-llama-70b": {
-            "mu": 1416.5546211690148,
+            "mu": 1199.427954726517,
             "sigma": 350,
-            "R": 366.5546211690148
-        },
-        "groq-meta-llama/llama-4-scout-17b-16e-instruct": {
-            "mu": 1347.0343366788006,
-            "sigma": 350,
-            "R": 297.0343366788006
-        },
-        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": {
-            "mu": 1328.2021960445122,
-            "sigma": 350,
-            "R": 278.2021960445122
+            "R": 149.4279547265171
         },
         "groq-deepseek-r1-distill-qwen-32b": {
-            "mu": 1325.336083477877,
+            "mu": 1198.7388391148413,
             "sigma": 350,
-            "R": 275.3360834778771
+            "R": 148.7388391148413
+        },
+        "groq-gemma2-9b-it": {
+            "mu": 1193.5132946402082,
+            "sigma": 350,
+            "R": 143.5132946402082
         },
         "groq-qwen-qwq-32b": {
-            "mu": 1303.2617225814845,
+            "mu": 1187.3204922795373,
             "sigma": 350,
-            "R": 253.2617225814845
+            "R": 137.32049227953735
+        },
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": {
+            "mu": 1171.5576167620623,
+            "sigma": 350,
+            "R": 121.55761676206225
+        },
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": {
+            "mu": 1160.1546576073504,
+            "sigma": 350,
+            "R": 110.15465760735037
+        },
+        "groq-llama-3.1-8b-instant": {
+            "mu": 1131.0830672538334,
+            "sigma": 350,
+            "R": 81.0830672538334
         },
         "local-phi4": {
-            "mu": 1275.7923721781183,
+            "mu": 1083.6583537010788,
             "sigma": 350,
-            "R": 225.79237217811828
+            "R": 33.658353701078795
         }
     },
     "effective_traitors_win_rate": {
-        "groq-qwen-2.5-32b": 100.0,
-        "groq-deepseek-r1-distill-llama-70b": 87.5,
+        "groq-deepseek-r1-distill-llama-70b": 78.57142857142857,
+        "groq-qwen-qwq-32b": 66.66666666666666,
+        "groq-qwen-2.5-32b": 54.54545454545454,
         "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 50.0,
-        "groq-gemma2-9b-it": 50.0,
-        "groq-qwen-qwq-32b": 50.0,
-        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 33.33333333333333,
-        "local-phi4": 33.33333333333333,
-        "groq-deepseek-r1-distill-qwen-32b": 0.0
+        "groq-deepseek-r1-distill-qwen-32b": 42.857142857142854,
+        "groq-gemma2-9b-it": 42.857142857142854,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 36.36363636363637,
+        "local-phi4": 25.0,
+        "groq-llama-3.1-8b-instant": 20.0
     },
     "successful_faithfuls_win_rate": {
-        "groq-qwen-2.5-32b": 50.0,
-        "groq-llama-3.1-8b-instant": 40.0,
-        "groq-gemma2-9b-it": 30.76923076923077,
-        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 26.666666666666668,
-        "groq-deepseek-r1-distill-llama-70b": 23.076923076923077,
-        "groq-deepseek-r1-distill-qwen-32b": 13.333333333333334,
-        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 6.666666666666667,
-        "groq-qwen-qwq-32b": 6.666666666666667,
-        "local-phi4": 0.0
+        "groq-qwen-2.5-32b": 31.818181818181817,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 28.947368421052634,
+        "groq-gemma2-9b-it": 20.0,
+        "groq-deepseek-r1-distill-llama-70b": 17.142857142857142,
+        "groq-deepseek-r1-distill-qwen-32b": 16.666666666666664,
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 16.216216216216218,
+        "groq-llama-3.1-8b-instant": 14.285714285714285,
+        "local-phi4": 10.81081081081081,
+        "groq-qwen-qwq-32b": 9.090909090909092
     },
     "average_earnings_per_game_by_model": {
-        "groq-deepseek-r1-distill-llama-70b": 138888.88888888888,
-        "groq-qwen-2.5-32b": 116666.66666666666,
-        "groq-gemma2-9b-it": 107142.85714285714,
-        "groq-llama-3.1-8b-instant": 83333.33333333333,
-        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 75396.8253968254,
-        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 59523.80952380953,
-        "groq-deepseek-r1-distill-qwen-32b": 29411.764705882353,
-        "groq-qwen-qwq-32b": 29411.764705882353,
-        "local-phi4": 23809.52380952381
+        "groq-qwen-2.5-32b": 95959.59595959596,
+        "groq-deepseek-r1-distill-llama-70b": 93537.41496598639,
+        "groq-meta-llama/llama-4-scout-17b-16e-instruct": 79931.97278911564,
+        "groq-gemma2-9b-it": 71428.57142857143,
+        "groq-meta-llama/llama-4-maverick-17b-128e-instruct": 71428.57142857143,
+        "groq-qwen-qwq-32b": 51075.2688172043,
+        "groq-deepseek-r1-distill-qwen-32b": 45698.92473118279,
+        "groq-llama-3.1-8b-instant": 40404.0404040404,
+        "local-phi4": 30612.244897959183
     }
 }

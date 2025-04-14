@@ -313,6 +313,7 @@ class TheTraitorsGame(RealityGame):
 
     def run_final_vote_to_end(self) -> bool:
         active_players = self.traitors + self.faithfuls
+        random.shuffle(active_players)
 
         plomp.record_event(
             {
@@ -428,6 +429,8 @@ class TheTraitorsGame(RealityGame):
     def run_final_elimination(self) -> None:
         # Final elimination - no role reveal
         active_players = self.traitors + self.faithfuls
+        random.shuffle(active_players)
+
         votes = {}
 
         for player in active_players:

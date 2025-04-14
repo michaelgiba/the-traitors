@@ -1,0 +1,85 @@
+{
+    "config_name": "single_traitor.json",
+    "config_data": {
+        "game_type": "THE_TRAITORS",
+        "participants": [
+            {
+                "name": "Morgan",
+                "model": "groq-deepseek-r1-distill-llama-70b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Taylor",
+                "model": "groq-gemma2-9b-it",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Riley",
+                "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Parker",
+                "model": "local-phi4",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Fletcher",
+                "model": "groq-qwen-2.5-32b",
+                "properties": {
+                    "role": "faithful"
+                }
+            },
+            {
+                "name": "Gwendolyn",
+                "model": "groq-llama-3.1-8b-instant",
+                "properties": {
+                    "role": "traitor"
+                }
+            },
+            {
+                "name": "Casey",
+                "model": "groq-meta-llama/llama-4-maverick-17b-128e-instruct",
+                "properties": {
+                    "role": "faithful"
+                }
+            }
+        ],
+        "traitor_count": 1
+    },
+    "result": {
+        "status": "finished",
+        "rounds": 4,
+        "winner_type": "faithfuls",
+        "eliminated": [
+            "Taylor",
+            "Casey",
+            "Gwendolyn",
+            "Fletcher",
+            "Parker"
+        ],
+        "prize_distribution": {
+            "Morgan": 250000.0,
+            "Riley": 250000.0
+        },
+        "initial_faithfuls": [
+            "Morgan",
+            "Taylor",
+            "Riley",
+            "Parker",
+            "Fletcher",
+            "Casey"
+        ],
+        "initial_traitors": [
+            "Gwendolyn"
+        ]
+    }
+}
