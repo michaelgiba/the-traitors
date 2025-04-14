@@ -35,7 +35,7 @@
                 "name": "Ellis",
                 "model": "groq-qwen-qwq-32b",
                 "properties": {
-                    "role": "faithful"
+                    "role": "traitor"
                 }
             },
             {
@@ -56,7 +56,7 @@
                 "name": "Fletcher",
                 "model": "groq-qwen-2.5-32b",
                 "properties": {
-                    "role": "traitor"
+                    "role": "faithful"
                 }
             },
             {
@@ -71,32 +71,33 @@
     },
     "result": {
         "status": "finished",
-        "rounds": 4,
+        "rounds": 3,
         "winner_type": "traitors",
         "eliminated": [
-            "Dominic",
-            "Beef",
-            "Sudz",
-            "Ellis",
             "Gwendolyn",
-            "Cassandra"
+            "Sudz",
+            "Cassandra",
+            "Beef",
+            "Fletcher",
+            "Braxton"
         ],
         "prize_distribution": {
-            "Alessandra": 250000.0,
-            "Fletcher": 250000.0
+            "Alessandra": 166666.66666666666,
+            "Dominic": 166666.66666666666,
+            "Ellis": 166666.66666666666
         },
         "initial_faithfuls": [
             "Braxton",
             "Cassandra",
-            "Ellis",
             "Sudz",
             "Beef",
+            "Fletcher",
             "Gwendolyn"
         ],
         "initial_traitors": [
             "Alessandra",
             "Dominic",
-            "Fletcher"
+            "Ellis"
         ]
     }
 }

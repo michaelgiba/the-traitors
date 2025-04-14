@@ -7,14 +7,14 @@
                 "name": "Alessandra",
                 "model": "groq-deepseek-r1-distill-llama-70b",
                 "properties": {
-                    "role": "traitor"
+                    "role": "faithful"
                 }
             },
             {
                 "name": "Braxton",
                 "model": "groq-deepseek-r1-distill-qwen-32b",
                 "properties": {
-                    "role": "faithful"
+                    "role": "traitor"
                 }
             },
             {
@@ -28,7 +28,7 @@
                 "name": "Dominic",
                 "model": "groq-meta-llama/llama-4-scout-17b-16e-instruct",
                 "properties": {
-                    "role": "traitor"
+                    "role": "faithful"
                 }
             },
             {
@@ -42,7 +42,7 @@
                 "name": "Sudz",
                 "model": "local-phi4",
                 "properties": {
-                    "role": "faithful"
+                    "role": "traitor"
                 }
             },
             {
@@ -74,28 +74,29 @@
         "rounds": 4,
         "winner_type": "traitors",
         "eliminated": [
-            "Dominic",
             "Beef",
-            "Sudz",
+            "Alessandra",
+            "Dominic",
+            "Cassandra",
+            "Braxton",
             "Ellis",
-            "Gwendolyn",
-            "Cassandra"
+            "Gwendolyn"
         ],
         "prize_distribution": {
-            "Alessandra": 250000.0,
+            "Sudz": 250000.0,
             "Fletcher": 250000.0
         },
         "initial_faithfuls": [
-            "Braxton",
+            "Alessandra",
             "Cassandra",
+            "Dominic",
             "Ellis",
-            "Sudz",
             "Beef",
             "Gwendolyn"
         ],
         "initial_traitors": [
-            "Alessandra",
-            "Dominic",
+            "Braxton",
+            "Sudz",
             "Fletcher"
         ]
     }
