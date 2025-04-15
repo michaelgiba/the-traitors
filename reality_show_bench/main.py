@@ -90,10 +90,7 @@ def _fill_plomp_buffer(buffer, raw_data) -> plomp.PlompBuffer:
 def main() -> None:
     args = parse_args()
     if args.existing_buffer:
-        with open(args.existing_buffer) as f:
-            existing_raw_plomp_data = json.load(f)
-
-        _fill_plomp_buffer(plomp.buffer(), existing_raw_plomp_data)
+        plomp.read_json(plomp.buffer(), args.existing_buffer)
 
     game, config_data = load_config(args.config, args.output_dir)
 
